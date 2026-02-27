@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Standalone Converter</title>
+  <style>
+    :root {
+      --bg: #edf3f8;
+      --panel: #ffffff;
+      --line: #d5dfe8;
+      --text: #1f2933;
+      --muted: #5e6a77;
+      --brand: #0d9488;
+      --brand-2: #0a7e73;
+      --error: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      color: var(--text);
+      font-family: "Segoe UI", "Noto Sans KR", sans-serif;
+      background: radial-gradient(circle at 0 0, #dce9f5 0, var(--bg) 54%);
+    }
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    h1 { margin: 0; font-size: 1.35rem; }
+    p { margin: 8px 0 0; color: var(--muted); }
+    .grid { margin-top: 16px; display: grid; gap: 14px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 760px) { .row { grid-template-columns: 1fr; } }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: #f8fbff;
+    }
+    label { display: block; font-weight: 700; font-size: 0.95rem; }
+    input[type="text"], select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+    .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--brand);
+      cursor: pointer;
+    }
+    button:hover { background: var(--brand-2); }
+    button.secondary { background: #556170; }
+    .muted { color: var(--muted); font-size: 0.92rem; }
+    .ok { color: #127a5f; font-weight: 700; }
+    .err { color: var(--error); font-weight: 700; }
+    pre {
+      margin-top: 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7f9fb;
+      padding: 10px;
+      max-height: 260px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Standalone 변환기</h1>
+    <p>브라우저에서 바로 실행되는 통합 변환기입니다. 변환 로직은 <code>converter-suite.js</code>에 있습니다.</p>
+
+    <section class="grid">
+      <div class="card">
+        <label>변환기 (.js 파일 선택)</label>
+        <div class="btns">
+          <button type="button" id="pickConverterBtn">변환기 파일 선택</button>
+        </div>
+        <div id="converterInfo" class="muted">선택 안 됨</div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <label>입력 파일</label>
+          <div class="btns">
+            <button type="button" id="pickFileBtn">파일 선택</button>
+          </div>
+          <div id="fileInfo" class="muted">선택 안 됨</div>
+        </div>
+        <div class="card">
+          <label>저장 방식</label>
+          <div class="btns">
+            <button type="button" id="savePickerBtn">다른 이름으로 저장</button>
+            <button type="button" class="secondary" id="downloadBtn">다운로드</button>
+          </div>
+          <div class="muted">저장 탐색기 미지원 브라우저에서는 다운로드를 사용하세요.</div>
+        </div>
+      </div>
+
+      <label>
+        출력 파일명
+        <input id="outputName" type="text" placeholder="result.html">
+      </label>
+
+      <div class="btns">
+        <button type="button" id="runBtn">변환 실행</button>
+      </div>
+
+      <div id="status" class="muted">준비됨</div>
+      <pre id="log" hidden></pre>
+    </section>
+  </main>
+
+  <script src="./converter-suite.js"></script>
+</body>
+</html>
